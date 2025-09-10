@@ -16,6 +16,8 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
+
+
 // 3) Login
 $msg = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -40,16 +42,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<title>Login Simples</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Login - Clínica Veterinária</title>
 </head>
 <body>
-
-<?php if (!empty($_SESSION["user_id"])): ?>
+    <?php if (!empty($_SESSION["user_id"])): ?>
   <div class="card">
     <h3>Bem-vindo, <?= $_SESSION["username"] ?>!</h3>
     <p>Sessão ativa.</p>
@@ -68,6 +68,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <p><small>Dica: admin / 123456</small></p>
   </div>
 <?php endif; ?>
-
 </body>
 </html>
+
+<?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: index.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Clínica Veterinária</title>
+</head>
+<body>
+    <h1>Bem-vindo, <?php echo $_SESSION['username']; ?>!</h1>
+    <p>Aqui vai o conteúdo da sua clínica veterinária (consultas, pets, clientes etc.).</p>
+    <a href="logout.php">Sair</a>
+</body>
+</html>
+
+<?php
+session_start();
+session_unset();
+session_destroy();
+
+header("Location: index.php");
+exit();
+?>
+
+
+
+
